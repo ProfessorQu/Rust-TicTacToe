@@ -33,16 +33,14 @@ pub mod tictactoe {
     }
 
     impl Board {
-        pub fn current_player_char(&self) -> char
-        {
+        pub fn current_player_char(&self) -> char {
             match self.x_turn {
                 true => 'X',
                 false => 'O'
             }
         }
 
-        fn current_player_cell(&self) -> Cell
-        {
+        fn current_player_cell(&self) -> Cell {
             match self.x_turn {
                 true => Cell::X,
                 false => Cell::O
@@ -50,15 +48,17 @@ pub mod tictactoe {
         }
 
         pub fn display(&self) {
-            println!("-------");
+            println!("   0 1 2 ");
+            println!("  -------");
 
             for y in 0..3 {
+                print!("{} ", y);
                 for x in 0..3 {
                     let name = NAMES[self.board[y][x] as usize];
                     print!("|{}", name);
                 }
                 println!("|");
-                println!("-------");
+                println!("  -------");
             }
         }
         
@@ -102,12 +102,11 @@ pub mod tictactoe {
             int < 3
         }
 
-        fn empty(&self, x: usize, y:usize) -> bool {
+        pub fn empty(&self, x: usize, y:usize) -> bool {
             self.board[y][x] == Cell::Empty
         }
 
-        pub fn get_play(&self) -> Result<(usize, usize, bool), MoveError>
-        {
+        pub fn get_play(&self) -> Result<(usize, usize, bool), MoveError> {
             print!("Enter x coordinate: ");
             stdout().flush().expect("Failed to flush output");
 
@@ -146,14 +145,20 @@ pub mod tictactoe {
             }
         }
 
-        pub fn play(&mut self, x: usize, y: usize)
-        {
+        pub fn play(&mut self, x: usize, y: usize) {
             self.board[y][x] = self.current_player_cell();
-            println!("Placed {} at x: {}, y: {}", self.current_player_char(), x, y);
             let game_over = self.game_over();
             if !game_over {
                 self.x_turn = !self.x_turn;
             }
+        }
+
+        pub fn unplay(&mut self, x: usize, y: usize) {
+            if !self.game_over() {
+                self.x_turn = !self.x_turn;
+            }
+
+            self.board[y][x] = Cell::Empty;
         }
     }
 }
