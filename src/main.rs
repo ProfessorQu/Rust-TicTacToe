@@ -25,10 +25,6 @@ fn main() {
         }
 
         board.play(x, y);
-        println!("Placed {} at x: {}, y: {}", board.current_player_char(), x, y);
-        if !board.game_over() {
-            board.switch_turn();
-        }
     }
 
     board.display();

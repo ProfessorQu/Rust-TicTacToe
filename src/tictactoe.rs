@@ -49,10 +49,6 @@ pub mod tictactoe {
             }
         }
 
-        pub fn switch_turn(&mut self) {
-            self.x_turn = !self.x_turn;
-        }
-
         pub fn display(&self) {
             println!("-------");
 
@@ -68,7 +64,11 @@ pub mod tictactoe {
         
         pub fn won(&self) -> bool {
             let player = self.current_player_cell();
-            for [(x0, y0), (x1, y1), (x2, y2)] in ROWS {
+            for [
+                    (x0, y0),
+                    (x1, y1),
+                    (x2, y2)
+                ] in ROWS {
                 if self.board[y0][x0] == player && self.board[y1][x1] == player && self.board[y2][x2] == player {
                     return true
                 }
@@ -106,14 +106,9 @@ pub mod tictactoe {
             self.board[y][x] == Cell::Empty
         }
 
-        fn legal_move(&self, x: usize, y: usize) -> bool
-        {
-            self.in_bounds(x) && self.in_bounds(y) && self.empty(x, y)
-        }
-
         pub fn get_play(&self) -> Result<(usize, usize, bool), MoveError>
         {
-            print!("Enter x coordinate of an empty square: ");
+            print!("Enter x coordinate: ");
             stdout().flush().expect("Failed to flush output");
 
             let mut x_string = String::new();
@@ -128,7 +123,7 @@ pub mod tictactoe {
                 }
             };
             
-            print!("Enter y coordinate of an empty square: ");
+            print!("Enter y coordinate: ");
             stdout().flush().expect("Failed to flush output");
 
             let mut y_string = String::new();
@@ -147,13 +142,18 @@ pub mod tictactoe {
                 Err(MoveError::Occupied)
             }
             else{
-                Ok((x, y, self.legal_move(x, y)))
+                Ok((x, y, true))
             }
         }
 
         pub fn play(&mut self, x: usize, y: usize)
         {
             self.board[y][x] = self.current_player_cell();
+            println!("Placed {} at x: {}, y: {}", self.current_player_char(), x, y);
+            let game_over = self.game_over();
+            if !game_over {
+                self.x_turn = !self.x_turn;
+            }
         }
     }
 }
