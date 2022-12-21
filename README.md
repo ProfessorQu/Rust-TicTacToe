@@ -17,3 +17,8 @@ After you do either the next player will have to input their move or the ai will
 The ai will then spit out a move and a random number called: Best value. This value is basically the chances it thinks that it's going to win.<br>
 &emsp;If it's playing as X, the higher the better.<br>
 &emsp;If it's playing as O, the lower the better.
+
+## Further Reading
+[Geeks for Geeks](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/)<br>
+[Sebastian Lague](https://www.youtube.com/watch?v=l-hh51ncgDI&ab_channel=SebastianLague)<br>
+[The Coding Train](https://www.youtube.com/watch?v=trKjYdBASyQ&ab_channel=TheCodingTrain)<br>
